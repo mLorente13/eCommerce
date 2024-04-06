@@ -1,53 +1,68 @@
 ---
-    import Slide from '../components/Slide.astro';
-    import SlidesControl from './SlideControls.astro';
-    const slides = [
-        {
-            src: '/src/img/slider/slider-img-1.jpg',
-            alt: 'Slide 1'
-        },
-        {
-            src: '/src/img/slider/slider-img-1.jpg',
-            alt: 'Slide 2'
-        },
-        {
-            src: '/src/img/slider/slider-img-1.jpg',
-            alt: 'Slide 3'
-        }
-    ]
+import Slide from "../components/Slide.astro";
+import SlidesControl from "./SlideControls.astro";
+const slides = [
+    {
+        src: "/src/img/slider/slider-img-1.jpg",
+        alt: "Slide 1",
+    },
+    {
+        src: "/src/img/slider/slider-img-1.jpg",
+        alt: "Slide 2",
+    },
+    {
+        src: "/src/img/slider/slider-img-1.jpg",
+        alt: "Slide 3",
+    },
+];
 ---
 
-<section id="slider" class="relative transition-all h-100% duration-500 ease-in-out w-screen">
-    <section id="slides" class="flex overflow-hidden w-[300%] relative transition-all duration-500 ease-in-out">
-        {
-            slides.map(
-                (slide) =>
-                    <Slide src={slide.src} alt={slide.alt} />
-            )
-        }
+<section
+    id="slider"
+    class="relative transition-all h-100% duration-500 ease-in-out w-screen"
+>
+    <section
+        id="slides"
+        class="flex overflow-hidden w-[300%] relative transition-all duration-500 ease-in-out"
+    >
+        {slides.map((slide) => <Slide src={slide.src} alt={slide.alt} />)}
     </section>
-    <section id="controls" class="absolute top-0 flex items-center justify-between w-full h-[100%] text-white">
+    <section
+        id="controls"
+        class="absolute top-0 flex items-center justify-between w-full h-[100%] text-white"
+    >
         <SlidesControl id="prev" direction="left" />
     </section>
 </section>
 
 <script>
-    const next = document?.getElementById('next');
-    const prev = document?.getElementById('prev');
+    const next = document?.getElementById("next");
+    const prev = document?.getElementById("prev");
     let position = 0;
-    const controls = document?.getElementById('controls');
+    const controls = document?.getElementById("controls");
 
-    const slider = document?.getElementById('slider');
-
+    const slider = document?.getElementById("slider");
     if (next && prev && slider && controls) {
-        prev.addEventListener('click', () => {
+        const interval = setInterval(() => {
+            if (position === 200) {
+                position = 0;
+                slider.style.transform = `translateX(-${position}%)`;
+                controls.style.transform = `translateX(${position}%)`;
+            } else {
+                position += 100;
+                slider.style.transform = `translateX(-${position}%)`;
+                controls.style.transform = `translateX(${position}%)`;
+            }
+        }, 5000);
+
+        prev.addEventListener("click", () => {
             if (position === 0) return;
             position -= 100;
             console.log(position);
             slider.style.transform = `translateX(-${position}%)`;
             controls.style.transform = `translateX(${position}%)`;
         });
-        next.addEventListener('click', () => {
+        next.addEventListener("click", () => {
             if (position === 200) return;
             position += 100;
             slider.style.transform = `translateX(-${position}%)`;
