@@ -46,27 +46,27 @@ const slides = [
         const interval = setInterval(() => {
             if (position === 200) {
                 position = 0;
-                slider.style.transform = `translateX(-${position}%)`;
-                controls.style.transform = `translateX(${position}%)`;
+                updatePosition();
             } else {
                 position += 100;
-                slider.style.transform = `translateX(-${position}%)`;
-                controls.style.transform = `translateX(${position}%)`;
+                updatePosition();
             }
         }, 5000);
 
         prev.addEventListener("click", () => {
             if (position === 0) return;
             position -= 100;
-            console.log(position);
-            slider.style.transform = `translateX(-${position}%)`;
-            controls.style.transform = `translateX(${position}%)`;
+            updatePosition();
         });
         next.addEventListener("click", () => {
             if (position === 200) return;
             position += 100;
-            slider.style.transform = `translateX(-${position}%)`;
-            controls.style.transform = `translateX(${position}%)`;
+            updatePosition();
         });
+    }
+
+    function updatePosition() {
+        slider.style.transform = `translateX(-${position}%)`;
+        controls.style.transform = `translateX(${position}%)`;
     }
 </script>
